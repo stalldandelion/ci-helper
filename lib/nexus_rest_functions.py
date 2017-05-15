@@ -1,11 +1,17 @@
 from flask import url_for, jsonify, abort
 from lib.nexus_class import NexusHelperClass
 
+
 def make_public_task(task):
+
     new_task = {}
     for field in task:
-        if field == 'id':
-            new_task['uri'] = url_for('ci-helper/rest/v1/tasks', task_id=task['id'], _external=True)
+        if field == 'functioncall':
+            if 'function_parameter' in task:
+                new_task['uri'] = url_for('show_task_id', task_id=task['id'], param=task['function_parameter'],
+                                          _external=True)
+            else:
+                new_task['uri'] = url_for('show_task_id', task_id=task['id'], _external=True)
         else:
             new_task[field] = task[field]
     return new_task
@@ -13,10 +19,11 @@ def make_public_task(task):
 
 def get_tasks(tasks):
 
-    return jsonify({'tasks': tasks})
+    return jsonify({'tasks': [make_public_task(task) for task in tasks]})
 
 
 def get_task(tasks, task_id):
+
     task = [task for task in tasks if task['id'] == task_id]
 
     # print(task[0]['title'])
