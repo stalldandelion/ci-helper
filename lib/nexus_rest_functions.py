@@ -26,9 +26,6 @@ def get_task(tasks, task_id):
 
     task = [task for task in tasks if task['id'] == task_id]
 
-    # print(task[0]['title'])
-    # functioncall = eval(task[0]['functioncall'])
-    # functioncall('test')
     if len(task) == 0:
         abort(404)
 

@@ -4,6 +4,17 @@ class NexusHelperClass:
         self.url = url
 
     @staticmethod
+    def get_repos():
+        """
+        Gets all repos from nexus
+        :return: list
+        """
+
+        repos = []
+
+        return repos
+
+    @staticmethod
     def get_leverables():
         """
         Gets all groups (leverables) from nexus

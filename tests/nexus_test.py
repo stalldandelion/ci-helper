@@ -8,6 +8,10 @@ class MyTestCase(unittest.TestCase):
 
         self.nexusHelper = NexusHelperClass('url')
 
+    def test_get_nexus_repos(self):
+
+        self.assertIsInstance(self.nexusHelper.get_repos(), list)
+
     def test_get_nexus_leverables(self):
 
         self.assertIsInstance(self.nexusHelper.get_leverables(), list)
