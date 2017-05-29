@@ -6,12 +6,15 @@ def make_public_task(task):
 
     new_task = {}
     for field in task:
-        if field == 'functioncall':
-            if 'function_parameter' in task:
-                new_task['uri'] = url_for('show_task_id', task_id=task['id'], param=task['function_parameter'],
+        if field == 'function_parameter':
+            if task['function_parameter']:
+                new_task['uri'] = url_for('perform_task_id', task_id=task['id'],
+                                          param=task['function_parameter'], url=task['function_url'],
                                           _external=True)
             else:
-                new_task['uri'] = url_for('show_task_id', task_id=task['id'], _external=True)
+                new_task['uri'] = url_for('perform_task_id', task_id=task['id'],
+                                          url=task['function_url'], _external=True)
+                # new_task['uri'] = url_for('perform_task_id', task_id=task['id'], _external=True)
         else:
             new_task[field] = task[field]
     return new_task
@@ -32,16 +35,17 @@ def get_task(tasks, task_id):
     return jsonify({'task': task[0]})
 
 
-def getleverables(intext):
-    nexushelper = NexusHelperClass('url')
-    print(nexushelper.get_leverables())
+def getleverables(url='sadbprodnexus9.sfa.se:8081'):
+    nexushelper = NexusHelperClass(url)
+    return nexushelper.get_leverables()
 
 
-def getartefacts(intext):
-    nexushelper = NexusHelperClass('url')
-    print(nexushelper.get_leverables())
+def getartefacts(leverable, url='sadbprodnexus9.sfa.se:8081'):
+    nexushelper = NexusHelperClass(url)
+    return nexushelper.get_artefacts(leverable)
 
 
-def getartefactversions(intext):
-    nexushelper = NexusHelperClass('url')
-    print(nexushelper.get_leverables())
+def getartefactversions(artefact, url='sadbprodnexus9.sfa.se:8081'):
+    nexushelper = NexusHelperClass(url)
+    return nexushelper.get_artefactversions(artefact)
+
